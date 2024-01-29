@@ -16,7 +16,7 @@ set workingDirectory=".\backupDir"
 set namefileToBackup="filename"
 set extfileToBackup=".extension"
 
-for /f "tokens=1,2,3,6 eol= skip=5 delims=;/ " %%G in ('dir /o:-d /t:c /a:-d %workingDirectory%\*.%extfileToBackup%') do (call :forBody %%G %%H %%I "%%J" & goto :myeof)
+for /f "tokens=1,2,3,6 eol= skip=5 delims=;/ " %%G in ('dir /o:-d /t:c /a:-d %workingDirectory:"=%\*.%extfileToBackup:"=%') do (call :forBody %%G %%H %%I "%%J" & goto :myeof)
 
 :myeof
 pause
