@@ -12,10 +12,10 @@ struct FileToMove {
     to: PathBuf,
 }
 impl FileToMove {
-    fn new_from_path(dir: &Path, file: &PathBuf) -> FileToMove {
+    fn new_from_path(dir: &Path, file: &Path) -> FileToMove {
         FileToMove {
-            from: file.clone(),
-            to: dir.join(file),
+            from: file.to_path_buf(),
+            to: dir.join(file.file_name().unwrap_or(file.as_os_str())),
         }
     }
     fn move_files(&self) {
@@ -80,7 +80,7 @@ impl DirTree {
             eprintln!("Failed to get datetime tag on file: {}", path.display());
         }
     }
-    fn add_file(&mut self, dir: &PathBuf, file: &PathBuf) {
+    fn add_file(&mut self, dir: &PathBuf, file: &Path) {
         let file_to_move = FileToMove::new_from_path(dir, file);
         match self.directories.get_mut(dir) {
             Some(v) => {
